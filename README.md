@@ -207,3 +207,10 @@
       "title": "importing os, datetime"
   }
   ```
+
+### 3. [Class-based Views](https://www.django-rest-framework.org/tutorial/3-class-based-views/)
+
+- Rewrite the function API views using class-based views
+- Used mixins and generics to reducde the views
+- Used generic class-based views to reduce the views even more
+
