@@ -113,3 +113,97 @@
   }
 
   ```
+
+### 2. [Requests and Responses](https://www.django-rest-framework.org/tutorial/2-requests-and-responses/)
+
+- Added the `@api_view` decorator to the function based views to use the `Response` & `Request` objects
+- Used rest framework status codes for the `Response` object
+  ```bash
+  $ http --form POST http://127.0.0.1:8000/snippets/ code="Hello, World!"
+  HTTP/1.1 201 Created
+  Allow: OPTIONS, GET, POST
+  Content-Length: 94
+  Content-Type: application/json
+  Date: Tue, 25 Jan 2022 13:16:10 GMT
+  Referrer-Policy: same-origin
+  Server: WSGIServer/0.2 CPython/3.8.10
+  Vary: Accept, Cookie
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+
+  {
+      "code": "Hello, World",
+      "id": 4,
+      "language": "text",
+      "linenos": false,
+      "style": "friendly",
+      "title": ""
+  }
+  ```
+  ```bash
+  $ http --form GET http://127.0.0.1:8000/snippets/2/
+  HTTP/1.1 200 OK
+  Allow: GET, DELETE, PUT, OPTIONS
+  Content-Length: 123
+  Content-Type: application/json
+  Date: Tue, 25 Jan 2022 13:55:47 GMT
+  Referrer-Policy: same-origin
+  Server: WSGIServer/0.2 CPython/3.8.10
+  Vary: Accept, Cookie
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+
+  {
+      "code": "print(\"Hello, World!\")",
+      "id": 2,
+      "language": "python",
+      "linenos": false,
+      "style": "friendly",
+      "title": "print statement"
+  }
+  ```
+- Added optional format suffixes to the URLs
+  ```bash
+  $ http http://127.0.0.1:8000/snippets/1.json
+  HTTP/1.1 200 OK
+  Allow: OPTIONS, DELETE, GET, PUT
+  Content-Length: 125
+  Content-Type: application/json
+  Date: Tue, 25 Jan 2022 13:17:11 GMT
+  Referrer-Policy: same-origin
+  Server: WSGIServer/0.2 CPython/3.8.10
+  Vary: Accept, Cookie
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+
+  {
+      "code": "import os, datetime",
+      "id": 1,
+      "language": "python",
+      "linenos": false,
+      "style": "friendly",
+      "title": "importing os, datetime"
+  }
+  ```
+  ```bash
+  $ http http://127.0.0.1:8000/snippets/1/ Accept:application/json
+  HTTP/1.1 200 OK
+  Allow: OPTIONS, DELETE, GET, PUT
+  Content-Length: 125
+  Content-Type: application/json
+  Date: Tue, 25 Jan 2022 13:17:34 GMT
+  Referrer-Policy: same-origin
+  Server: WSGIServer/0.2 CPython/3.8.10
+  Vary: Accept, Cookie
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+
+  {
+      "code": "import os, datetime",
+      "id": 1,
+      "language": "python",
+      "linenos": false,
+      "style": "friendly",
+      "title": "importing os, datetime"
+  }
+  ```
