@@ -214,3 +214,145 @@
 - Used mixins and generics to reducde the views
 - Used generic class-based views to reduce the views even more
 
+### 4. [Authentication & Permissions](https://www.django-rest-framework.org/tutorial/4-authentication-and-permissions/#tutorial-4-authentication-permissions)
+
+- Added `owner` field using the django-inbuilt `User` model
+- Created `UserSerializer` to create endpoints for the `User` model
+- Created `UserList` and `UserRetrieve` using the generic class-based views
+- Updated the `snippets.urls` to map the newly created views to `/users/` and `/user/x/`
+- Created a custom permission to access the objects so that only the user that created a code snippet is able to update or delete it
+- Tested the API using the `httpie` tool
+  ```bash
+  $ http GET http://127.0.0.1:8000/snippets/
+  HTTP/1.1 200 OK
+  Allow: GET, POST, HEAD, OPTIONS
+  Content-Length: 289
+  Content-Type: application/json
+  Date: Thu, 27 Jan 2022 07:47:04 GMT
+  Referrer-Policy: same-origin
+  Server: WSGIServer/0.2 CPython/3.8.10
+  Vary: Accept, Cookie
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+
+  [
+      {
+          "code": "import os\r\n\r\nprint(os.getcwd())",
+          "id": 2,
+          "language": "python",
+          "linenos": false,
+          "owner": "venu",
+          "style": "friendly",
+          "title": "print current directory path"
+      },
+      {
+          "code": "hi, this is a text snippet.",
+          "id": 3,
+          "language": "text",
+          "linenos": false,
+          "owner": "root",
+          "style": "friendly",
+          "title": ""
+      }
+  ]
+  ```
+  ```bash
+  $ http GET http://127.0.0.1:8000/snippet/3/
+  HTTP/1.1 403 Forbidden
+  Allow: GET, PUT, PATCH, DELETE, HEAD, OPTIONS
+  Content-Length: 58
+  Content-Type: application/json
+  Date: Thu, 27 Jan 2022 07:47:09 GMT
+  Referrer-Policy: same-origin
+  Server: WSGIServer/0.2 CPython/3.8.10
+  Vary: Accept, Cookie
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+
+  {
+      "detail": "Authentication credentials were not provided."
+  }
+
+  $ http -a root:root GET http://127.0.0.1:8000/snippet/3/
+  HTTP/1.1 200 OK
+  Allow: GET, PUT, PATCH, DELETE, HEAD, OPTIONS
+  Content-Length: 124
+  Content-Type: application/json
+  Date: Thu, 27 Jan 2022 07:47:18 GMT
+  Referrer-Policy: same-origin
+  Server: WSGIServer/0.2 CPython/3.8.10
+  Vary: Accept, Cookie
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+
+  {
+      "code": "hi, this is a text snippet.",
+      "id": 3,
+      "language": "text",
+      "linenos": false,
+      "owner": "root",
+      "style": "friendly",
+      "title": ""
+  }
+  ```
+  ```bash
+  $ http POST http://127.0.0.1:8000/snippets/ code="simple code snippet."
+  HTTP/1.1 403 Forbidden
+  Allow: GET, POST, HEAD, OPTIONS
+  Content-Length: 58
+  Content-Type: application/json
+  Date: Thu, 27 Jan 2022 07:47:56 GMT
+  Referrer-Policy: same-origin
+  Server: WSGIServer/0.2 CPython/3.8.10
+  Vary: Accept, Cookie
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+
+  {
+      "detail": "Authentication credentials were not provided."
+  }
+
+  $ http -a root:root POST http://127.0.0.1:8000/snippets/ code="simple code snippet."
+  HTTP/1.1 201 Created
+  Allow: GET, POST, HEAD, OPTIONS
+  Content-Length: 117
+  Content-Type: application/json
+  Date: Thu, 27 Jan 2022 07:48:16 GMT
+  Referrer-Policy: same-origin
+  Server: WSGIServer/0.2 CPython/3.8.10
+  Vary: Accept, Cookie
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+
+  {
+      "code": "simple code snippet.",
+      "id": 4,
+      "language": "text",
+      "linenos": false,
+      "owner": "root",
+      "style": "friendly",
+      "title": ""
+  }
+
+  $ http -a root:root GET http://127.0.0.1:8000/snippet/4/
+  HTTP/1.1 200 OK
+  Allow: GET, PUT, PATCH, DELETE, HEAD, OPTIONS
+  Content-Length: 117
+  Content-Type: application/json
+  Date: Thu, 27 Jan 2022 07:48:26 GMT
+  Referrer-Policy: same-origin
+  Server: WSGIServer/0.2 CPython/3.8.10
+  Vary: Accept, Cookie
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+
+  {
+      "code": "simple code snippet.",
+      "id": 4,
+      "language": "text",
+      "linenos": false,
+      "owner": "root",
+      "style": "friendly",
+      "title": ""
+  }
+  ```
