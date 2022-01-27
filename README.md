@@ -390,3 +390,13 @@
       "url": "http://127.0.0.1:8000/snippet/3/"
   }
   ```
+
+### 6. [ViewSets & Routers](https://www.django-rest-framework.org/tutorial/6-viewsets-and-routers/)
+
+- Refactored the `snippet.views` to use ViewSets
+- The `UserList` and `UserDetail` merged using the `ReadOnlyModelViewSet` class since it allows only list and retrieve functions
+- The `SnippetList`, `SnippetDetail` and `SnippetHighlight` view classes are reduced to `SnippetViewSet` and created a new ViewSet using the `ModelViewSet` class
+- Used the `@action` decorator to create a custom action for the `highlight` function
+- Created multiple views from each ViewSet class, by binding the http methods with the required action for each view and then register them with a urlpath
+- Used `Router` class to register the appropriate ViewSets with a router and it would generate the url configurations by itself
+
