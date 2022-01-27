@@ -357,7 +357,7 @@
   }
   ```
 
-### 5. [Relationships & Hyperlinked APIs](Relationships & Hyperlinked APIs)
+### 5. [Relationships & Hyperlinked APIs](https://www.django-rest-framework.org/tutorial/5-relationships-and-hyperlinked-apis/)
 
 - Created a field for storing the HTML output of the highlighted code, this is generated using the `HtmlFormatter` of the `pygments` library
 - Updated the serializers to use `HyperlinkedModelSerializer` instead of `ModelSerializer`
