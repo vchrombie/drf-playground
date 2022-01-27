@@ -356,3 +356,37 @@
       "title": ""
   }
   ```
+
+### 5. [Relationships & Hyperlinked APIs](Relationships & Hyperlinked APIs)
+
+- Created a field for storing the HTML output of the highlighted code, this is generated using the `HtmlFormatter` of the `pygments` library
+- Updated the serializers to use `HyperlinkedModelSerializer` instead of `ModelSerializer`
+  - it doesn't include `id` field, so we have to mention it so that we can use it for traversing
+  - it includes the `url` field by using the `HyperlinkedIdentityField`, we can use this for showing the highlighted HTML code
+  - it uses `HyperlinkedRelatedField`, instead of `PrimaryKeyRelatedField`, for establishing relationships
+- Added the urlpatterns to test the APIs
+  ```bash
+  $ http -a root:root GET http://127.0.0.1:8000/snippet/3/
+  HTTP/1.1 200 OK
+  Allow: GET, PUT, PATCH, DELETE, HEAD, OPTIONS
+  Content-Length: 246
+  Content-Type: application/json
+  Date: Thu, 27 Jan 2022 10:16:59 GMT
+  Referrer-Policy: same-origin
+  Server: WSGIServer/0.2 CPython/3.8.10
+  Vary: Accept, Cookie
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+
+  {
+      "code": "This is a simple text snippet.",
+      "highlight": "http://127.0.0.1:8000/snippet/3/highlight/",
+      "id": 3,
+      "language": "output",
+      "linenos": false,
+      "owner": "root",
+      "style": "friendly",
+      "title": "simple text snippet",
+      "url": "http://127.0.0.1:8000/snippet/3/"
+  }
+  ```
