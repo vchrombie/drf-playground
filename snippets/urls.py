@@ -5,10 +5,18 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from snippets import views
 
 urlpatterns = [
-    path('snippets/', views.SnippetList.as_view(), name='snippets_list'),
-    path('snippet/<int:pk>/', views.SnippetDetail.as_view(), name='snippet_detail'),
-    path('users/', views.UserList.as_view(), name='users_list'),
-    path('user/<int:pk>/', views.UserDetail.as_view(), name='user_detail'),
+    path('snippets/',
+         views.SnippetList.as_view(),
+         name='snippets-list'),
+    path('snippet/<int:pk>/',
+         views.SnippetDetail.as_view(),
+         name='snippet-detail'),
+    path('users/',
+         views.UserList.as_view(),
+         name='users-list'),
+    path('user/<int:pk>/',
+         views.UserDetail.as_view(),
+         name='user-detail'),
 ]
 
 urlpatterns += [
