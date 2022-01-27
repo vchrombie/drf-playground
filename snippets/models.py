@@ -38,6 +38,12 @@ class Snippet(models.Model):
         choices=STYLE_CHOICES,
         default='friendly'
     )
+    owner = models.ForeignKey(
+        'auth.User',
+        verbose_name='Owner of the Snippet',
+        related_name='snippets',
+        on_delete=models.CASCADE
+    )
 
     class Meta:
         ordering = ['created']
