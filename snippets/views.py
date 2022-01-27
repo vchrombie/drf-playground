@@ -37,7 +37,7 @@ class SnippetViewSet(
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
-    @action(detail=True, renderers=[renderers.StaticHTMLRenderer])
+    @action(detail=True, renderer_classes=[renderers.StaticHTMLRenderer])
     def highlight(self, request, *args, **kwargs):
         snippet = self.get_object()
         return Response(snippet.highlight)
