@@ -1,5 +1,9 @@
 # drf-playground
 
+Django REST Framework Tutorial
+
+---
+
 ### 1. [Serialization](https://www.django-rest-framework.org/tutorial/1-serialization/)
  
 - Created `Snippet` model (`snippet/models.py`) that can store code snippets
